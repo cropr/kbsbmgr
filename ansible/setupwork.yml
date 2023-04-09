@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+    - name: load services variables
+      include_vars:
+        file: "vars/{{ project }}.yml"
+
+    - name: checkin content
+      include_role:
+        name: checkin_content

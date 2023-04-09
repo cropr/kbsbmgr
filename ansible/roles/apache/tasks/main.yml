@@ -1,0 +1,8 @@
+- name: Show PORT variable
+  ansible.builtin.debug:
+    msg: "{{ PORT | default('No PORT set') }}"
+
+- name: Ensure apache is at the latest version
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: /etc/apache2/sites-enabled/000-default.conf

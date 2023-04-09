@@ -1,0 +1,18 @@
+
+- name: stage changes locally  
+  ansible.builtin.command:
+    cmd: git add *
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+
+- name: commit changes locally in build dir to local git repo
+  ansible.builtin.command:
+    cmd: git commit -m "updated content by {{ user }}"
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+
+- name: push changes to remote repo
+  ansible.builtin.command:
+    cmd: git push
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"    
+
+
+

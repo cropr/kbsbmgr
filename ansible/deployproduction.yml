@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+    - name: load services variables
+      include_vars:
+        file: "vars/{{ project }}.yml"
+
+    - name: copy statamic to build
+      include_role:
+        name: copy_statamic2build
+
+    - name: deploy production
+      include_role:
+        name: deploy_production 
+      

@@ -1,0 +1,31 @@
+# we first do a git pull and clear content to be sure we don't get any merge conflicts
+
+- name: git pull {{ project }} in {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+    cmd: git pull
+
+- name: clear articles + pages on build
+  become: true
+  ansible.builtin.shell: 
+    cmd: rm -rf {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}/{{ item }}
+  loop:
+    - articles
+    - pages
+
+- name: "copy articles and pages from statamic copy to {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+  become: true
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+    cmd: "cp -r /var/www/{{ project }}_{{ user }}/content/collections/{{ item }} ."
+  loop:
+    - articles
+    - pages
+
+- name: copy trn from statamic copy to build
+  become: true
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+    cmd: "cp -r /var/www/{{ project }}_{{ user }}/public/assets/{{ item }} ."
+  loop:
+    - trn

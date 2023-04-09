@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+    - name: configure apache
+      include_role:
+        name: apache

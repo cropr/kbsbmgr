@@ -20,10 +20,14 @@ RUN apt update \
 RUN apt install -y python3 python3-pip git \
     && pip install ansible
 
+WORKDIR /ansible
+COPY ansible .
+RUN ansible-playbook configureapache.yml -e apacheport=8080
+
 WORKDIR /var/www/kbsbmgr
 COPY index.html /var/www/kbsbmgr/public/
 COPY phptest.php /var/www/kbsbmgr/public/
-COPY apache.conf /etc/apache2/sites-enabled/000-default.conf
+
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

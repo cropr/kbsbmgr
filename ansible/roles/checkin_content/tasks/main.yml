@@ -1,0 +1,58 @@
+- name: git checkout kosk-nuxt in {{ build_path }}/{{ project }}/{{ user }}
+  ansible.builtin.git:
+    repo: "{{ git_url }}"
+    dest: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project }}"
+    accept_hostkey: yes
+    version: master
+    force: yes
+
+- name: git pull
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project }}"
+    cmd: git pull
+
+- name: git checkout additional
+  ansible.builtin.git:
+    repo: "{{ git_url_extra }}"
+    dest: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project_extra }}"
+    accept_hostkey: yes
+    version: master
+    force: yes
+  when:  git_url_extra | default(false)
+
+- name: install node modules
+  community.general.yarn:
+    path: "{{ build_path }}//{{ project }}/{{ user }}/{{ git_project }}"
+
+- name: copy collections from {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }} to statamic 
+  become: true
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+    cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/content/collections/"
+  loop:
+    - articles
+    - pages
+
+- name: make statamic collections www-data rw
+  become: true
+  ansible.builtin.shell:
+    cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/content/collections/"
+
+- name: copy assets to statamic container
+  become: true
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+    cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/public/assets"    
+  loop:
+    - trn
+    - calendar
+
+- name: make statamic assets www-data rw
+  become: true
+  ansible.builtin.shell:
+    cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/public/assets"
+
+- name: clear stache
+  ansible.builtin.shell:
+    chdir: /var/www/{{ project }}_{{ user }}
+    cmd: "php please stache:clear"

@@ -1,0 +1,14 @@
+- name: check if preview on user port is listening
+  ansible.builtin.wait_for:
+    port: "1{{ users[user]['preview_port'] }}"
+    timeout: 1
+  register: port_check
+  ignore_errors: yes
+
+- name: "Try to restart yarn dev on port {{ uservars['preview_port'] }} if not started yet"
+  ansible.builtin.command: 
+    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project }}"
+    cmd: "yarn dev --port 1{{ users[user]['preview_port'] }}"
+  async: 1000
+  poll: 0
+  when: port_check.failed == true  
