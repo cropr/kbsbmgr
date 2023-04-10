@@ -1,34 +1,23 @@
-FROM php:8.2-apache
+FROM php:8.2-fpm
 
-# php dependencies
+# install nginx git python and ansible
 RUN apt update \
-    && apt install -y \
-    g++ \
-    libicu-dev \
-    libpq-dev \
-    libzip-dev \
-    zip \
-    zlib1g-dev \
-    && docker-php-ext-install \
-    intl \
-    opcache \
-    pdo \
-    pdo_pgsql \
-    pgsql
-
-# install git python and ansible
-RUN apt install -y python3 python3-pip git \
+    && apt install -y netcat nginx python3 python3-pip git \
     && pip install ansible
 
-WORKDIR /ansible
-COPY ansible .
-RUN ansible-playbook configureapache.yml -e apacheport=8080
+RUN mkdir -p /run/nginx
 
-WORKDIR /var/www/kbsbmgr
-COPY index.html /var/www/kbsbmgr/public/
-COPY phptest.php /var/www/kbsbmgr/public/
-
-
+# install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-EXPOSE 80
+WORKDIR /app/ansible
+COPY ansible .
+RUN ansible-playbook configurenginx.yml
+
+WORKDIR /app/kbsbmgr
+COPY php/kbsbmgr .
+RUN cd /app/kbsbmgr && /usr/local/bin/composer install --no-dev
+
+RUN chown -R www-data: /app/kbsbmgr
+COPY startup.sh /app
+CMD sh /app/startup.sh
