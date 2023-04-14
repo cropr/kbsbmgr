@@ -2,7 +2,7 @@ FROM php:8.2-fpm
 
 # install nginx git python and ansible
 RUN apt update \
-    && apt install -y netcat nginx python3 python3-pip git \
+    && apt install -y netcat nginx libnginx-mod-stream python3 python3-pip git \
     && pip install ansible
 
 RUN mkdir -p /run/nginx

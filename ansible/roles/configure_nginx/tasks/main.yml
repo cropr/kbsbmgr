@@ -1,12 +1,18 @@
 - name: set nginxport variable
   ansible.builtin.set_fact:
     nginxport: "{{ lookup('ansible.builtin.env', 'PORT', default='8080') }}"
+    service_gcp: "{{ lookup('ansible.builtin.env', 'K_SERVICE', default=False) }}"
 
-- name: set nginxport variable
+- name: show nginxport variable
   ansible.builtin.debug:
     var: nginxport
 
+- name: show service_gcp variable
+  ansible.builtin.debug:
+    var: service_gcp
+
 - name: Configure nginx
   ansible.builtin.template:
-    src: nginx.conf.j2
+    src: "{{ 'nginx.conf.https.j2' if service_gcp else 'nginx.conf.http.j2' }}"
     dest: /etc/nginx/nginx.conf
+

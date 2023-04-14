@@ -1,0 +1,154 @@
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          required: true
+          validate:
+            - required
+  sidebar:
+    display: Sidebar
+    fields:
+      -
+        handle: slug
+        field:
+          type: slug
+          localizable: true
+      -
+        handle: parent
+        field:
+          type: entries
+          collections:
+            - pages
+          max_items: 1
+          listable: false
+          localizable: true
+  nl:
+    display: NL
+    fields:
+      -
+        handle: title_nl
+        field:
+          input_type: text
+          antlers: false
+          display: 'Title Dutch'
+          type: text
+          icon: text
+          instructions: 'The title in Dutch.  If not provided the general title is used'
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+      -
+        handle: content_nl
+        field:
+          restrict: false
+          automatic_line_breaks: true
+          automatic_links: false
+          escape_markup: false
+          smartypants: false
+          antlers: false
+          default: 'Deze pagina is niet in het Nederlands beschikbaar.'
+          display: 'Content Dutch'
+          type: markdown
+          icon: markdown
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+  fr:
+    display: FR
+    fields:
+      -
+        handle: title_fr
+        field:
+          input_type: text
+          antlers: false
+          display: 'Title French'
+          type: text
+          icon: text
+          instructions: 'The title in Franch.  If not provided the general title is used'
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+      -
+        handle: content_fr
+        field:
+          restrict: false
+          automatic_line_breaks: true
+          automatic_links: false
+          escape_markup: false
+          smartypants: false
+          antlers: false
+          default: "Cette page n'est pas disponible en français"
+          display: 'Content French'
+          type: markdown
+          icon: markdown
+          instructions: 'the contentn in French'
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+  de:
+    display: DE
+    fields:
+      -
+        handle: title_de
+        field:
+          input_type: text
+          antlers: false
+          display: 'Title German'
+          type: text
+          icon: text
+          instructions: 'The  title in German.  If not provided the general title is used'
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+      -
+        handle: content_de
+        field:
+          restrict: false
+          automatic_line_breaks: true
+          automatic_links: false
+          escape_markup: false
+          smartypants: false
+          antlers: false
+          default: 'Diese Seite ist nicht auf Deutsch verfügbar'
+          display: 'Content German'
+          type: markdown
+          icon: markdown
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+  en:
+    display: EN
+    fields:
+      -
+        handle: title_en
+        field:
+          input_type: text
+          antlers: false
+          display: 'Title English'
+          type: text
+          icon: text
+          instructions: 'The title in English. If not provided the general title is used'
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+      -
+        handle: content_english
+        field:
+          restrict: false
+          automatic_line_breaks: true
+          automatic_links: false
+          escape_markup: false
+          smartypants: false
+          antlers: false
+          default: 'This page is not available in English'
+          display: 'Content English'
+          type: markdown
+          icon: markdown
+          listable: hidden
+          instructions_position: above
+          visibility: visible
+title: Page
