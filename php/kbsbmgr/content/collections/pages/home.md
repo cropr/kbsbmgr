@@ -1,47 +1,16 @@
 ---
-id: 0cd6642e-46e3-4981-bf72-88fbff30d571
-blueprint: page
 title: Home
-title_nl: "De Koninklijke Belgische Schaakbond"
-content_nl: |-
-    De Koninklijke Belgische Schaakbond (KBSB) is de officële nationale schaakfederatie van België.  Zijn doelstellingen zijn:
-     
-     - het behartigen van de gemeenschappelijke belangen van zijn leden
-     - de vertegenwoordiging van de Belgische schaaksport op internationaal niveau
-     - het aansluiten bij de internationaal overkoepelende organisaties en het stimuleren van deelname aan de door hen georganiseerde evenementen
-     - het organiseren of delegeren van allerhande nationale competities zoals de Belgische kampioenschappen voor senioren en jeugd, interclub kampioenschappen, de schoolschaak kampioenschappen, internationale open toernooien, …
-     - het opstellen van een klassement voor spelende leden
-     - het organiseren van diverse schaaktechnische en bestuurlijke opleidingen
-title_fr: "La Fédération Royale Belge des Echecs"
-content_fr: |-
-    La Fédération Royal Belge des Echecs (FRBE) est la fédération officielle de Belgique.
-
-    La fédération a comme but:
-     - défendre les intérêts communs de ses membres
-     - représenter l’ensemble des échecs belges sur le plan international
-     - s’affilier aux organismes faîtiers internationaux échiquéens et stimuler la participation à leurs organisations
-     - organiser ou déléguer l’organisation de tout genre de compétitions nationales; elle organise notamment les championnats de Belgique seniors et de la jeunesse, les championnats de Belgique interclubs, les championnats interscolaires, des tournois open internationaux, ...
-     - établir une liste de classement des sportifs affiliés
-     - organiser diverses formations relatives à la pratique des échecs et à la gestion.
-title_de: "Der Königlicher Schachbund Belgien"
-content_de: |-
-    Der Königlicher Schachbund Belgien(KSB) ist der offizielle nationale Schachverband Belgiens. Seine Ziele sind:
-
-     - die gemeinsamen Interessen seiner Mitglieder zu vertreten
-     - die Vertretung des belgischen Schachsports auf internationaler Ebene
-     - die Verbindung zu den internationalen Dachorganisationen und Förderung der Teilnahme an den von ihnen organisierten Veranstaltungen
-     - die Organisation oder Delegation von nationalen Wettbewerben aller Art wie den belgischen Meisterschaften für Senioren und Jugendliche, Interclub-Meisterschaften, Schulschachmeisterschaften, internationalen offenen Turnieren, ...
-     - die Aufstellung einer Rangliste für spielende Mitglieder
-     - die Organisation verschiedener technischer und Management-Schulungen
-title_en: "The Royal Belgian Chess Federation"
-content_english: |-
-    The Royal Belgian Chess Federation (RBCF) is the official national ches federation of Belgium.  Its goals are:
-
-     - promoting the common interests of its members representing the Belgian chess sport at international level
-     - joining the international umbrella organizations and encouraging participation in the events they organize
-     - organizing or delegating all kinds of national competitions such as the Belgian championships for seniors and youth, interclub championships, the school chess championships, international open tournaments, ...
-     - drawing up a classification for the playing members
-     - organizing various technical and managerial training courses.
-updated_by: b46560a0-b628-42f6-ba72-5624f1bbcac3
-updated_at: 1681314775
+id: home
+template: home
+blueprint: pages
 ---
+## Welcome to your brand new Statamic site!
+
+Not sure where to do next? Here are a few ideas, but feel free to explore in your own way, in your own time.
+
+- [Jump into the Control Panel](/cp) and edit this page or begin setting up your own collections and blueprints.
+- [Head to the docs](https://statamic.dev) and learn how Statamic works.
+- [Watch some Statamic videos](https://youtube.com/statamic) on YouTube.
+- [Join our Discord chat](https://statamic.com/discord) and meet thousands of other Statamic developers.
+- [Start a discussion](https://github.com/statamic/cms/discussions) and get answers to your questions.
+- [Star Statamic on Github](https://github.com/statamic/cms) if you enjoy using it!
