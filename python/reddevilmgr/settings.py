@@ -5,7 +5,7 @@ import yaml
 from pathlib import Path
 
 # paths
-ANSIBLE_PATH = Path(os.environ.get("ANSIBLE_PATH", "ansible"))
+ANSIBLE_PATH = Path(os.environ.get("ANSIBLE_PATH", "../ansible"))
 SECRETS_PATH = Path(os.environ.get("SECRETS_PATH", ""))
 COLORLOG = False
 LOG_CONFIG = {

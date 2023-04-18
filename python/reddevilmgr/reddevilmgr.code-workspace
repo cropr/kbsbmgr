@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../reddevilmgr_ui"
+		},
+		{
+			"path": "../../statamic"
+		}
+	],
+	"settings": {}
+}
