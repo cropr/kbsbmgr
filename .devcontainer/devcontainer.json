@@ -12,8 +12,11 @@
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
-		9001
-	]
+		9001,
+		8080
+	],
+	"overrideCommand": true
+	// "overrideCommand": false
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",
 	// Configure tool-specific properties.

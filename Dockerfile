@@ -8,12 +8,10 @@ RUN apt update \
 
 RUN mkdir -p /run/nginx
 
-# setup ansible
+# setup ansible to comnfigure nginx
 WORKDIR /app/ansible
 COPY ansible .
 RUN ansible-playbook configurenginx.yml
-
-
 
 # setup php part
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -30,5 +28,7 @@ COPY python/libs/reddevil-3.0.4-py3-none-any.whl libs/
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY python/ .
 RUN mv gunicorn.conf.prod gunicorn.conf.py
+
+EXPOSE 8080
 
 CMD /app/startup.sh

@@ -8,6 +8,9 @@ from pathlib import Path
 ANSIBLE_PATH = Path(os.environ.get("ANSIBLE_PATH", "../ansible"))
 SECRETS_PATH = Path(os.environ.get("SECRETS_PATH", ""))
 COLORLOG = False
+CONTENT_BRANCH = os.environ.get("CONTENT_BRANCH", "master")
+FRONTEND_BRANCH = os.environ.get("FRONTEND_BRANCH", "master")
+
 LOG_CONFIG = {
     "version": 1,
     "formatters": {

@@ -12,6 +12,7 @@ def api_root():
 domain_mapping = {
     "kosk.be": "kosk",
     "bycco.be": "bycco",
+    "frbe-kbsb-ksb.be": "kbsb"
 }
 
 import reddevilmgr.api.ansible

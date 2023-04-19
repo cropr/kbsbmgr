@@ -17,7 +17,12 @@ def api_setupwork(p: Person):
     r = ansible_runner.run(
         private_data_dir=settings.ANSIBLE_PATH.as_posix(),
         playbook="setupwork.yml",
-        extravars={"project": project, "user": user},
+        extravars={
+            "project": project,
+            "user": user,
+            "content_branch": settings.CONTENT_BRANCH,
+            "frontend_branch": settings.FRONTEND_BRANCH,
+        },
     )
     print("r", vars(r))
     return {"status": r.status}

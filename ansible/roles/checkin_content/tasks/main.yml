@@ -1,58 +1,43 @@
-- name: git checkout kosk-nuxt in {{ build_path }}/{{ project }}/{{ user }}
-  ansible.builtin.git:
-    repo: "{{ git_url }}"
-    dest: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project }}"
-    accept_hostkey: yes
-    version: master
-    force: yes
+- name: git checkout {{ content_repo }} in {{ build_path }}/{{ project }}
+  become: true
+  ansible.builtin.shell:
+    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    cmd: "git checkout {{ content_branch }}"
 
 - name: git pull
+  become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project }}"
+    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
     cmd: git pull
-
-- name: git checkout additional
-  ansible.builtin.git:
-    repo: "{{ git_url_extra }}"
-    dest: "{{ build_path }}/{{ project }}/{{ user }}/{{ git_project_extra }}"
-    accept_hostkey: yes
-    version: master
-    force: yes
-  when:  git_url_extra | default(false)
-
-- name: install node modules
-  community.general.yarn:
-    path: "{{ build_path }}//{{ project }}/{{ user }}/{{ git_project }}"
 
 - name: copy collections from {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }} to statamic 
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
-    cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/content/collections/"
-  loop:
-    - articles
-    - pages
+    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    cmd: "cp -r {{item }} {{ statamic_path }}/content/collections/"
+  loop: "{{ collections }}"
 
 - name: make statamic collections www-data rw
   become: true
   ansible.builtin.shell:
-    cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/content/collections/"
+    cmd: "chown  -R www-data:www-data {{ statamic_path }}/content/collections/"
 
-- name: copy assets to statamic container
-  become: true
-  ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
-    cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/public/assets"    
-  loop:
-    - trn
-    - calendar
+# - name: copy assets to statamic container
+#   become: true
+#   ansible.builtin.shell:
+#     chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+#     cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/public/assets"    
+#   loop:
+#     - trn
+#     - calendar
 
-- name: make statamic assets www-data rw
-  become: true
-  ansible.builtin.shell:
-    cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/public/assets"
+# - name: make statamic assets www-data rw
+#   become: true
+#   ansible.builtin.shell:
+#     cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/public/assets"
 
 - name: clear stache
+  become: true
   ansible.builtin.shell:
-    chdir: /var/www/{{ project }}_{{ user }}
+    chdir: "{{ statamic_path }}"
     cmd: "php please stache:clear"
