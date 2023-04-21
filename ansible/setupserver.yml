@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars: 
+    project: kbsb
+  
+  tasks:
+
+    - name: load services variables
+      include_vars:
+        file: "vars/kbsb.yml"
+    
+    - name: setup server   
+      include_role:
+        name: setup_server
+        
+    - name: configure nginx
+      include_role:
+        name: configure_nginx
+

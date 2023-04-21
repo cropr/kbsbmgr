@@ -1,0 +1,16 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+[remote "origin"]
+	url = git@github.com:cropr/kbsbcontent.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[url "https://git: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@github.com/"]
+	insteadOf = git@github.com:
+[pull]
+	rebase = false	

@@ -1,9 +1,0 @@
----
-- hosts: localhost
-  gather_facts: no
-
-  tasks:
-
-    - name: configure nginx
-      include_role:
-        name: configure_nginx

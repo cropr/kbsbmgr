@@ -9,10 +9,16 @@
         file: "vars/{{ project }}.yml"
 
     - name: copy statamic to build
+      vars:
+        workdir: "{{ build_path }}/{{ content_name }}"
+        phpdir:  "/app/{{ project }}"    
       include_role:
         name: copy_statamic2build
 
     - name: launch preview
+      vars:
+        workdir: "{{ build_path }}/{{ content_name }}"
+        phpdir:  "/app/{{ project }}"    
       include_role:
         name: launch_preview  
       

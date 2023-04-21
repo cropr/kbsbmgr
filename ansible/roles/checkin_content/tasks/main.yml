@@ -1,26 +1,26 @@
-- name: git checkout {{ content_repo }} in {{ build_path }}/{{ project }}
+- name: git checkout {{ content_repo }} in {{ workdir }}
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    chdir: "{{ workdir }}"
     cmd: "git checkout {{ content_branch }}"
 
 - name: git pull
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    chdir: "{{ workdir }}"
     cmd: git pull
 
-- name: copy collections from {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }} to statamic 
+- name: copy content collections from {{ workdir }} to statamic content collections
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
-    cmd: "cp -r {{item }} {{ statamic_path }}/content/collections/"
-  loop: "{{ collections }}"
+    chdir: "{{ workdir }}"
+    cmd: "cp -r {{item }} {{ phpdir }}/content/collections/"
+  loop: "{{ contentcollections }}"
 
-- name: make statamic collections www-data rw
+- name: make statamic content collections rw for user www-data
   become: true
   ansible.builtin.shell:
-    cmd: "chown  -R www-data:www-data {{ statamic_path }}/content/collections/"
+    cmd: "chown  -R www-data:www-data {{ phpdir }}/content/collections/"
 
 # - name: copy assets to statamic container
 #   become: true
@@ -39,5 +39,10 @@
 - name: clear stache
   become: true
   ansible.builtin.shell:
-    chdir: "{{ statamic_path }}"
+    chdir: "{{ phpdir }}"
     cmd: "php please stache:clear"
+
+- name: make statamic storage rw for user www-data
+  become: true
+  ansible.builtin.shell:
+    cmd: "chown  -R www-data:www-data {{ phpdir }}/storage"

@@ -11,6 +11,10 @@
   ansible.builtin.debug:
     var: service_gcp
 
+- name: show phpdir variable
+  ansible.builtin.debug:
+    var: phpdir
+
 - name: Configure nginx
   ansible.builtin.template:
     src: "{{ 'nginx.conf.https.j2' if service_gcp else 'nginx.conf.http.j2' }}"

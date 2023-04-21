@@ -13,7 +13,7 @@ http {
     server {
         listen 8080 default_server;
         server_name _;
-        root /app/kbsbmgr/public;
+        root {{ phpdir }}/public;
         index index.php;
         charset utf-8;
         location / {

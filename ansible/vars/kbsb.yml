@@ -1,8 +1,8 @@
-build_path: /app/work
 content_repo: git@github.com:cropr/kbsbcontent.git
 content_name: kbsbcontent
-frontend_repo: git@github.com:cropr/kbsb.git
-collections:
+contentcollections:
   - articles
   - pages
-statamic_path: /app/php/kbsbmgr
+frontend_repo: git@github.com:cropr/kbsb.git
+phpdir: /app/kbsbmgr
+workdir: /app/work/kbsbcontent

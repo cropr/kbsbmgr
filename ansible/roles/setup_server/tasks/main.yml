@@ -1,0 +1,15 @@
+- name: create .git directory is it is not existing
+  ansible.builtin.file:
+    state: directory
+    path: "{{ workdir }}/.git"
+
+- name: set ssh config to disable host check for github
+  ansible.builtin.copy:
+    src: ssh_github.conf
+    dest: /etc/ssh/ssh_config.d/github.conf
+
+- name: set the .git/config file to inject TOKEN in the url
+  ansible.builtin.copy:
+    src: git_config
+    dest: "{{ workdir }}/.git/config"
+

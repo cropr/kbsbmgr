@@ -3,18 +3,18 @@
 - name: git pull
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    chdir: "{{ workdir }}"
     cmd: git pull
 
 - name: clear articles + pages on build
   become: true
   ansible.builtin.shell: 
-    cmd: rm -rf {{ build_path }}/{{ project }}/{{ content_name }}/{{ item }}/*
-  loop: "{{ collections }}"
+    cmd: rm -rf {{ workdir }}/{{ item }}/*
+  loop: "{{ contentcollections }}"
 
-- name: "copy articles and pages from statamic copy to {{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
+- name: "copy articles and pages from statamic copy to {{ workidr }}"
   become: true
   ansible.builtin.shell:
-    chdir: "{{ build_path }}/{{ project }}/{{ content_name }}"
+    chdir: "{{ workdir }}"
     cmd: "cp -r {{ statamic_path }}/content/collections/{{item }} ."
-  loop: "{{ collections }}"
+  loop: "{{ contentcollections }}"
