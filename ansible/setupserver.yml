@@ -13,8 +13,5 @@
     - name: setup server   
       include_role:
         name: setup_server
-        
-    - name: configure nginx
-      include_role:
-        name: configure_nginx
+
 

@@ -1,48 +1,34 @@
-- name: git checkout {{ content_repo }} in {{ workdir }}
+- name: git checkout {{ content_repo }} in {{ content_dir }}
   become: true
   ansible.builtin.shell:
-    chdir: "{{ workdir }}"
+    chdir: "{{ content_dir }}"
     cmd: "git checkout {{ content_branch }}"
 
 - name: git pull
   become: true
   ansible.builtin.shell:
-    chdir: "{{ workdir }}"
+    chdir: "{{ content_dir }}"
     cmd: git pull
 
-- name: copy content collections from {{ workdir }} to statamic content collections
+- name: copy content collections from {{ content_dir }} to statamic content collections
   become: true
   ansible.builtin.shell:
-    chdir: "{{ workdir }}"
-    cmd: "cp -r {{item }} {{ phpdir }}/content/collections/"
+    chdir: "{{ content_dir }}"
+    cmd: "cp -r {{item }} {{ php_dir }}/content/collections/"
   loop: "{{ contentcollections }}"
 
 - name: make statamic content collections rw for user www-data
   become: true
   ansible.builtin.shell:
-    cmd: "chown  -R www-data:www-data {{ phpdir }}/content/collections/"
-
-# - name: copy assets to statamic container
-#   become: true
-#   ansible.builtin.shell:
-#     chdir: "{{ build_path }}/{{ project }}/{{ user }}/{{ content_path }}"
-#     cmd: "cp -r {{item }} /var/www/{{ project }}_{{ user }}/public/assets"    
-#   loop:
-#     - trn
-#     - calendar
-
-# - name: make statamic assets www-data rw
-#   become: true
-#   ansible.builtin.shell:
-#     cmd: "chown  -R www-data:www-data /var/www/{{ project }}_{{ user }}/public/assets"
+    cmd: "chown  -R www-data:www-data {{ php_dir }}/content/collections/"
 
 - name: clear stache
   become: true
   ansible.builtin.shell:
-    chdir: "{{ phpdir }}"
+    chdir: "{{ php_dir }}"
     cmd: "php please stache:clear"
 
 - name: make statamic storage rw for user www-data
   become: true
   ansible.builtin.shell:
-    cmd: "chown  -R www-data:www-data {{ phpdir }}/storage"
+    cmd: "chown  -R www-data:www-data {{ php_dir }}/storage"

@@ -16,10 +16,9 @@ COPY ansible .
 
 # setup php part
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-WORKDIR /app/kbsbmgr
+WORKDIR /app/php/kbsbmgr
 COPY php/kbsbmgr .
-RUN cd /app/kbsbmgr && /usr/local/bin/composer install --no-dev
-RUN chown -R www-data: /app/kbsbmgr
+RUN cd /app/php/kbsbmgr && /usr/local/bin/composer install --no-dev
 
 # setup python part
 WORKDIR /app/python
@@ -28,8 +27,8 @@ COPY python/libs/reddevil-3.0.4-py3-none-any.whl libs/
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY python/ .
 
-# setup work
-COPY work/kbsbcontent /app/work/kbsbcontent
+# setup content part
+COPY content/kbsbcontent /app/content/kbsbcontent
 
 # startup script
 COPY startup.sh /app

@@ -1,24 +1,63 @@
-- name: create .git directory is it is not existing
-  ansible.builtin.file:
-    state: directory
-    path: "{{ workdir }}/.git"
+# enable ssh access to github
 
 - name: configure ssh to disable host check for github
   ansible.builtin.copy:
     src: ssh_github.conf
     dest: /etc/ssh/ssh_config.d/github.conf
 
+# setup content directory
+
+- name: configure git to inject GIT_TOKEN in the url
+  ansible.builtin.template:
+    src: git_config
+    dest: "{{ content_dir }}/.git/config"
+
+# configure php statamic
+
+- name: make statamic belonging too user www-data
+  ansible.builtin.file:
+    path: "{{ php_dir }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+- name: clear the storage cache 
+  ansible.builtin.shell:
+    chdir: "{{ php_dir }}"
+    cmd: php please stache:clear  
+
+- name: make statamic/storage belonging too user www-data
+  ansible.builtin.file:
+    path: "{{ php_dir }}/storage"
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+# configure python gunicorn
+
 - name: configure gunicorn
   ansible.builtin.copy:
     src: gunicorn.conf.py
     dest: /app/python/
 
-- name: configure git to inject GIT_TOKEN in the url
-  ansible.builtin.template:
-    src: git_config
-    dest: "{{ workdir }}/.git/config"
+# configure nginx
 
-- name: clear stache on statamic
-  ansible.builtin.shell:
-    chdir: /app/kbsbmgr
-    cmd: php please stache:clear
+- name: set nginxport variable
+  ansible.builtin.set_fact:
+    nginxport: "{{ lookup('ansible.builtin.env', 'PORT', default='8080') }}"
+    service_gcp: "{{ lookup('ansible.builtin.env', 'K_SERVICE', default=False) }}"
+
+- name: show nginxport variable
+  ansible.builtin.debug:
+    var: nginxport
+
+- name: show service_gcp variable
+  ansible.builtin.debug:
+    var: service_gcp
+
+- name: Configure nginx
+  ansible.builtin.template:
+    src: "{{ 'nginx.conf.https.j2' if service_gcp else 'nginx.conf.http.j2' }}"
+    dest: /etc/nginx/nginx.conf

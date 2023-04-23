@@ -16,7 +16,7 @@ def api_setupwork(p: Person):
     project = domain_mapping.get(domain)
     r = ansible_runner.run(
         private_data_dir=settings.ANSIBLE_PATH.as_posix(),
-        playbook="setupwork.yml",
+        playbook="checkin.yml",
         extravars={
             "project": project,
             "user": user,
