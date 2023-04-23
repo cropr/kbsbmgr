@@ -3,13 +3,22 @@
     state: directory
     path: "{{ workdir }}/.git"
 
-- name: set ssh config to disable host check for github
+- name: configure ssh to disable host check for github
   ansible.builtin.copy:
     src: ssh_github.conf
     dest: /etc/ssh/ssh_config.d/github.conf
 
-- name: set the .git/config file to inject TOKEN in the url
+- name: configure gunicorn
   ansible.builtin.copy:
+    src: gunicorn.conf.py
+    dest: /app/python/
+
+- name: configure git to inject GIT_TOKEN in the url
+  ansible.builtin.template:
     src: git_config
     dest: "{{ workdir }}/.git/config"
 
+- name: clear stache on statamic
+  ansible.builtin.shell:
+    chdir: /app/kbsbmgr
+    cmd: php please stache:clear

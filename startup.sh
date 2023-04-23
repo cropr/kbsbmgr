@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+
+pushd /app/ansible && \
+    ansible-playbook setupserver.yml -e git_token=$GIT_TOKEN && \
+    popd
 
 gunicorn -c /app/python/gunicorn.conf.py reddevilmgr.main:app
 
