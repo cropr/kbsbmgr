@@ -8,21 +8,6 @@ from reddevilmgr.models.user import Person
 from reddevilmgr.api import domain_mapping
 
 
-@app.post("/python/production")
-def api_production(p: Person):
-    settings = get_settings()
-    domain = p.email.split("@")[-1]
-    user = p.user.lower()
-    project = domain_mapping.get(domain)
-    r = ansible_runner.run(
-        private_data_dir=settings.ANSIBLE_PATH.as_posix(),
-        playbook="deployproduction.yml",
-        extravars={"project": project, "user": user},
-    )
-    print("r", vars(r))
-    return {"status": r.status}
-
-
 @app.post("/python/checkout")
 def api_checkout(p: Person):
     settings = get_settings()

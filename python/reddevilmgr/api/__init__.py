@@ -14,6 +14,4 @@ domain_mapping = {"kosk.be": "kosk", "bycco.be": "bycco", "frbe-kbsb-ksb.be": "k
 
 import reddevilmgr.api.ansible
 import reddevilmgr.api.checkin
-import reddevilmgr.api.preview
-import reddevilmgr.api.production
-import reddevilmgr.api.ports
+import reddevilmgr.api.checkout

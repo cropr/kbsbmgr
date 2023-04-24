@@ -8,8 +8,8 @@ from reddevilmgr.api import domain_mapping
 import ansible_runner
 
 
-@app.post("/python/setupwork")
-def api_setupwork(p: Person):
+@app.post("/python/checkin")
+def api_checkin(p: Person):
     settings = get_settings()
     domain = p.email.split("@")[-1]
     user = p.user.lower()
