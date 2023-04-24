@@ -136,7 +136,7 @@ sections:
           instructions_position: above
           visibility: visible
       -
-        handle: content_english
+        handle: content_en
         field:
           restrict: false
           automatic_line_breaks: true
