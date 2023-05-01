@@ -1,22 +1,34 @@
 # we first do a git pull and clear content to be sure we don't get any merge conflicts
 
+- name: define collection_dir variables ending on slash
+  set_fact:
+    st_collection_dir: "{{ php_dir }}/content/collections/"
+    git_collection_dir: "{{ content_dir }}/{{ content_subpath | default('')}}"
+
+- name: show collection dir
+  debug:
+    var: "{{ item }}"
+  loop:
+    - st_collection_dir
+    - git_collection_dir
+
 - name: git pull
   become: true
   ansible.builtin.command:
     chdir: "{{ content_dir }}"
-    cmd: git pull
+    cmd: git pull origin {{ content_branch }}
 
-- name: clear articles + pages on build
+- name: clear articles + pages on git repo (si we don't copy deleted items)
   become: true
   ansible.builtin.shell:
-    cmd: rm -rf {{ content_dir }}/{{ item }}/*
+    cmd: rm -rf {{ git_collection_dir }}{{ item }}/*
   loop: "{{ content_collections }}"
 
 - name: copy articles and pages from statamic to local git repo
   become: true
   ansible.builtin.command:
-    chdir: "{{ content_dir }}"
-    cmd: "cp -r {{ php_dir }}/content/collections/{{item }} ."
+    chdir: "{{ git_collection_dir }}"
+    cmd: "cp -r {{ st_collection_dir }}{{item }} . "
   loop: "{{ content_collections }}"
 
 - name: stage changes locally  
@@ -31,6 +43,6 @@
 
 - name: push changes to remote repo
   ansible.builtin.command:
-    cmd: git push
+    cmd: git push --set-upstream origin {{ content_branch }}
     chdir: "{{ content_dir }}" 
 

@@ -1,16 +1,20 @@
 # copyright Ruben Decrop 2012 - 2021
 # parts are copyrighted Chessdevil Consulting
 
+import logging
 from reddevilmgr.main import app
 from reddevil.core import get_settings
 from reddevilmgr.models.user import Person
 from reddevilmgr.api import domain_mapping
 import ansible_runner
 
+logger = logging.getLogger("reddevilmgr")
+
 
 @app.post("/python/checkin")
 def api_checkin(p: Person):
     settings = get_settings()
+    logger.info("Doing checkin")
     domain = p.email.split("@")[-1]
     user = p.user.lower()
     project = domain_mapping.get(domain)

@@ -14,7 +14,7 @@
   become: true
   ansible.builtin.shell:
     chdir: "{{ content_dir }}"
-    cmd: "cp -r {{item }} {{ php_dir }}/content/collections/"
+    cmd: "cp -r {{ content_subpath | default('') }}{{item }} {{ php_dir }}/content/collections/"
   loop: "{{ content_collections }}"
 
 - name: make statamic content collections rw for user www-data

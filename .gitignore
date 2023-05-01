@@ -3,4 +3,4 @@
 .vscode
 ansible/artifacts
 runlocal
-content/kbsbcontent
+content/kbsb_ui

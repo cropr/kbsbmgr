@@ -24,11 +24,11 @@ RUN cd /app/php/kbsbmgr && /usr/local/bin/composer install --no-dev
 WORKDIR /app/python
 COPY python/requirements.txt .
 COPY python/libs/reddevil-3.0.4-py3-none-any.whl libs/
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install -r requirements.txt
 COPY python/ .
 
 # setup content part
-COPY content/kbsbcontent /app/content/kbsbcontent
+COPY content/kbsb_ui /app/content/kbsb_ui
 
 # startup script
 COPY startup.sh /app
