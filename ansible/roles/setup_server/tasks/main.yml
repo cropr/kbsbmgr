@@ -10,26 +10,18 @@
 - name: configure git to inject GIT_TOKEN in the url
   ansible.builtin.template:
     src: git_config
-    dest: "{{ content_dir }}/.git/config"
+    dest: "/root/.gitconfig"
+
+- name: clone the content repo to 
+  ansible.builtin.shell:
+    chdir: "{{ content.srcdir }}"
+    cmd: git clone {{ repo.url }}
 
 # configure php statamic
 
 - name: make statamic belonging too user www-data
   ansible.builtin.file:
     path: "{{ php_dir }}"
-    state: directory
-    owner: www-data
-    group: www-data
-    recurse: yes
-
-- name: clear the storage cache 
-  ansible.builtin.shell:
-    chdir: "{{ php_dir }}"
-    cmd: php please stache:clear  
-
-- name: make statamic/storage belonging too user www-data
-  ansible.builtin.file:
-    path: "{{ php_dir }}/storage"
     state: directory
     owner: www-data
     group: www-data

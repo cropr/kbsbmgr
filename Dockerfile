@@ -28,7 +28,7 @@ RUN pip install -r requirements.txt
 COPY python/ .
 
 # setup content part
-COPY content/kbsb_ui /app/content/kbsb_ui
+RUN mkdir -p /app/content
 
 # startup script
 COPY startup.sh /app
