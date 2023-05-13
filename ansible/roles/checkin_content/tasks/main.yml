@@ -1,21 +1,33 @@
-- name: git checkout {{ content_repo }} in {{ content_dir }}
+- name: define collection_dir variables ending on slash
+  set_fact:
+    collection_dir_st: "{{ php_dir }}/content/collections/"
+    collection_dir_repo: "{{ content.srcdir }}/{{ repo.name }}/content"
+
+- name: show collection dir
+  debug:
+    var: "{{ item }}"
+  loop:
+    - collection_dir_st
+    - collection_dir_repo
+
+- name: git checkout {{ contentrepo.url }} in {{ content.srcdir }}/{{ repo.name }}
   become: true
   ansible.builtin.shell:
-    chdir: "{{ content_dir }}"
-    cmd: "git checkout {{ content_branch }}"
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
+    cmd: "git checkout {{ repo.branch }} --"
 
 - name: git pull
   become: true
   ansible.builtin.shell:
-    chdir: "{{ content_dir }}"
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
     cmd: git pull
 
 - name: copy content collections from {{ content_dir }} to statamic content collections
   become: true
   ansible.builtin.shell:
-    chdir: "{{ content_dir }}"
-    cmd: "cp -r {{ content_subpath | default('') }}{{item }} {{ php_dir }}/content/collections/"
-  loop: "{{ content_collections }}"
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
+    cmd: "cp -r content/{{item }} {{ php_dir }}/content/collections/"
+  loop: "{{ content.collections }}"
 
 - name: make statamic content collections rw for user www-data
   become: true

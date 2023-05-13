@@ -1,10 +1,10 @@
-content_repo: git@github.com:cropr/kbsb_ui.git
-content_name: kbsb_ui
-content_dir: /app/content/kbsb_ui
-content_subpath: content/
-content_branch: staging
-content_collections:
-  - articles
-  - pages
-frontend_repo: git@github.com:cropr/kbsb.git
+repo:
+  url: git@github.com:cropr/kbsb_ui.git
+  name: kbsb_ui
+  branch: staging
+content:
+  srcdir: /app/content
+  collections:
+    - articles
+    - pages
 php_dir: /app/php/kbsbmgr
