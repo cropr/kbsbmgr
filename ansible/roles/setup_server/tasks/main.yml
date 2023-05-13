@@ -27,19 +27,6 @@
     group: www-data
     recurse: yes
 
-- name: clear the storage cache 
-  ansible.builtin.shell:
-    chdir: "{{ php_dir }}"
-    cmd: php please stache:clear  
-
-- name: make statamic/storage belonging too user www-data
-  ansible.builtin.file:
-    path: "{{ php_dir }}/storage"
-    state: directory
-    owner: www-data
-    group: www-data
-    recurse: yes
-
 # configure python gunicorn
 
 - name: configure gunicorn

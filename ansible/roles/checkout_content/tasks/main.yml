@@ -2,47 +2,48 @@
 
 - name: define collection_dir variables ending on slash
   set_fact:
-    st_collection_dir: "{{ php_dir }}/content/collections/"
-    git_collection_dir: "{{ content_dir }}//{{ content_name }}/{{ content_subpath | default('')}}"
+    collection_dir_st: "{{ php_dir }}/content/collections/"
+    collection_dir_repo: "{{ content.srcdir }}/{{ repo.name }}/content"
 
 - name: show collection dir
   debug:
     var: "{{ item }}"
   loop:
-    - st_collection_dir
-    - git_collection_dir
+    - collection_dir_st
+    - collection_dir_repo
 
 - name: git pull
   become: true
   ansible.builtin.command:
-    chdir: "{{ content_dir }}//{{ content_name }}"
-    cmd: git pull origin {{ content_branch }}
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
+    cmd: git pull origin {{ repo.branch }}
 
-- name: clear articles + pages on git repo (si we don't copy deleted items)
+- name: clear articles + pages on git repo (so we remove deleted items)
   become: true
   ansible.builtin.shell:
-    cmd: rm -rf {{ git_collection_dir }}{{ item }}/*
-  loop: "{{ content_collections }}"
+    chdir: "{{ collection_dir_repo }}"
+    cmd: rm -rf {{ item }}/*
+  loop: "{{ content.collections }}"
 
 - name: copy articles and pages from statamic to local git repo
   become: true
   ansible.builtin.command:
-    chdir: "{{ git_collection_dir }}"
-    cmd: "cp -r {{ st_collection_dir }}{{item }} . "
-  loop: "{{ content_collections }}"
+    chdir: "{{ collection_dir_repo }}"
+    cmd: "cp -r {{ collection_dir_st }}{{item }} . "
+  loop: "{{ content.collections }}"
 
 - name: stage changes locally  
   ansible.builtin.command:
     cmd: git add *
-    chdir: "{{ content_dir }}//{{ content_name }}"
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
 
 - name: commit changes locally in build dir to local git repo
   ansible.builtin.command:
     cmd: git commit -m "updated content by {{ user }}"
-    chdir: "{{ content_dir }}//{{ content_name }}"
+    chdir: "{{ content.srcdir }}/{{ repo.name }}"
 
 - name: push changes to remote repo
   ansible.builtin.command:
-    cmd: git push --set-upstream origin {{ content_branch }}
-    chdir: "{{ content_dir }}//{{ content_name }}" 
+    cmd: git push --set-upstream origin {{ repo.branch }}
+    chdir: "{{ content.srcdir }}/{{ repo.name }}" 
 
