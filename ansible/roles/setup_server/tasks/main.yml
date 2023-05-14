@@ -1,5 +1,24 @@
 # enable ssh access to github
 
+- name: set id_rsa variables
+  ansible.builtin.set_fact:
+    id_rsa: "{{ lookup('ansible.builtin.env', 'ID_RSA', default='') }}"
+    id_rsa_pub: "{{ lookup('ansible.builtin.env', 'ID_RSA_PUB', default='') }}"
+
+- name: set id_rsa private key
+  ansible.builtin.copy:
+    content: "{{ id_rsa }}"
+    dest: /root/.ssh/id_rsa
+    mode: 0600
+  when: id_rsa
+
+- name: set id_rsa public key
+  ansible.builtin.copy:
+    content: "{{ id_rsa_pub }}"
+    dest: /root/.ssh/id_rsa_pub
+    mode: 0644
+  when: id_rsa
+
 - name: configure ssh to disable host check for github
   ansible.builtin.copy:
     src: ssh_github.conf
