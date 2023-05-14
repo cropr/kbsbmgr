@@ -1,4 +1,14 @@
-# enable ssh access to github
+- name: create /root/.ssh
+  ansible.builtin.file:
+    path: /root/.ssh
+    state: directory
+
+- name: configure ssh to disable host check for github
+  ansible.builtin.copy:
+    src: ssh_github.conf
+    dest: /etc/ssh/ssh_config.d/github.conf
+
+# setup ssh keys for github
 
 - name: set id_rsa variables
   ansible.builtin.set_fact:
@@ -19,17 +29,13 @@
     mode: 0644
   when: id_rsa
 
-- name: configure ssh to disable host check for github
-  ansible.builtin.copy:
-    src: ssh_github.conf
-    dest: /etc/ssh/ssh_config.d/github.conf
 
 # setup content directory
 
-- name: configure git to inject GIT_TOKEN in the url
-  ansible.builtin.template:
-    src: git_config
-    dest: "/root/.gitconfig"
+# - name: configure git to inject GIT_TOKEN in the url
+#   ansible.builtin.template:
+#     src: git_config
+#     dest: "/root/.gitconfig"
 
 - name: clone the content repo to 
   ansible.builtin.shell:

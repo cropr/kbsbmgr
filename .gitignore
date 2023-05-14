@@ -3,4 +3,5 @@
 .vscode
 ansible/artifacts
 runlocal
+docker-compose.yaml
 content/kbsb_ui
