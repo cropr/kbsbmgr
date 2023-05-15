@@ -17,7 +17,7 @@ COPY ansible .
 # setup php part
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN docker-php-ext-configure zip && docker-php-ext-install zip
-COPY php_zip.ini /usr/local/etc/php/conf.d/
+# COPY php_zip.ini /usr/local/etc/php/conf.d/
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 WORKDIR /app/php/kbsbmgr
 COPY php/kbsbmgr .
