@@ -7,9 +7,9 @@ authors = ["Ruben Decrop <ruben@chessdevil.net>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = "^0.87.0"
-ansible-runner = "^2.3.1"
+ansible-runner = "^2.3.2"
 reddevil = {path = "./libs/reddevil-3.0.4-py3-none-any.whl"}
-ansible = "^7.2.0"
+ansible = "^7.5.0"
 gunicorn = "^20.1.0"
 uvicorn = "^0.19.0"
 
