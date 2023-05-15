@@ -15,6 +15,7 @@ WORKDIR /app/ansible
 COPY ansible .
 
 # setup php part
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 WORKDIR /app/php/kbsbmgr
 COPY php/kbsbmgr .
