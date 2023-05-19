@@ -49,7 +49,7 @@
 
 - name: create statamic .env file
   ansible.builtin.copy:
-    dest: "{{ phpdir }}/.env"
+    dest: "{{ php_dir }}/.env"
     src: statamic_env
 
 - name: make statamic belonging too user www-data
