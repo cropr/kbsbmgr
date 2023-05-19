@@ -8,4 +8,4 @@ content:
     - articles
     - pages
 php_dir: /app/php/kbsbmgr
-use_https: 1
+use_https: 0
