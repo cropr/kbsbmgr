@@ -52,7 +52,7 @@
     dest: "{{ php_dir }}/.env"
     src: statamic_env
 
-- name: make statamic belonging too user www-data
+- name: make statamic belonging to user www-data
   ansible.builtin.file:
     path: "{{ php_dir }}"
     state: directory
