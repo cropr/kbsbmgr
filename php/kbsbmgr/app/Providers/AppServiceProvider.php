@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Statamic\Statamic;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Statamic::script('app', 'cp');
-        // Statamic::style('app', 'cp');
+        \Illuminate\Support\Facades\URL::forceScheme('https');
     }
 }
