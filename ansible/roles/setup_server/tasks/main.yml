@@ -32,10 +32,13 @@
 
 # setup content directory
 
-# - name: configure git to inject GIT_TOKEN in the url
-#   ansible.builtin.template:
-#     src: git_config
-#     dest: "/root/.gitconfig"
+- name: clear the content repo dir
+  ansible.builtin.file:
+    state: "{{ item }}"
+    path: "{{ content.srcdir }}"
+  loop:
+    - absent 
+    - directory
 
 - name: clone the content repo to 
   ansible.builtin.shell:
