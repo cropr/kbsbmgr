@@ -31,7 +31,7 @@
 
 - name: configure git user.name and user email
   ansible.builtin.shell:
-    cmd: git cconfig  --global  {{ item }}
+    cmd: git config  --global  {{ item }}
   loop:
     - "user.name {{ repo.gitusername }}"    
     - "user.email {{ repo.gitemail }}"    
