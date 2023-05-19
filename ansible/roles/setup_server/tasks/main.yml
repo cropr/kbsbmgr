@@ -29,6 +29,12 @@
     mode: 0644
   when: id_rsa
 
+- name: configure git user.name and user email
+  ansible.builtin.shell:
+    cmd: git cconfig  --global  {{ item }}
+  loop:
+    - "user.name {{ repo.gitusername }}"    
+    - "user.email {{ repo.gitemail }}"    
 
 # setup content directory
 
