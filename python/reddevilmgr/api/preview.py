@@ -7,6 +7,8 @@ from reddevilmgr.models.user import MgrRequest
 from reddevilmgr.api import domain_mapping
 import ansible_runner
 
+# TODO not working for the moment
+
 
 @app.post("/python/preview")
 def api_preview(p: MgrRequest):

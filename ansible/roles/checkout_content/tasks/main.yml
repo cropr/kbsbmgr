@@ -16,7 +16,7 @@
   become: true
   ansible.builtin.command:
     chdir: "{{ content.srcdir }}/{{ repo.name }}"
-    cmd: git pull origin {{ repo.branch }}
+    cmd: git pull origin {{ repo_branch }}
 
 - name: clear articles + pages on git repo (so we remove deleted items)
   become: true
@@ -44,6 +44,6 @@
 
 - name: push changes to remote repo
   ansible.builtin.command:
-    cmd: git push --set-upstream origin {{ repo.branch }}
+    cmd: git push --set-upstream origin {{ repo_branch }}
     chdir: "{{ content.srcdir }}/{{ repo.name }}" 
 

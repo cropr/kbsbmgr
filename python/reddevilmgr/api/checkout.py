@@ -17,7 +17,7 @@ def api_checkout(p: MgrRequest):
     r = ansible_runner.run(
         private_data_dir=settings.ANSIBLE_PATH.as_posix(),
         playbook="checkout.yml",
-        extravars={"project": project, "user": user},
+        extravars={"project": project, "user": user, "repo_branch": p.branch},
     )
     print("r", vars(r))
     return {"status": r.status}

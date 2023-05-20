@@ -1,7 +1,6 @@
 repo:
   url: git@github.com:cropr/kbsb_ui.git
   name: kbsb_ui
-  branch: staging
   gitusername: Ruben Decrop
   gitemail: ruben@chessdevil.net
 content:

@@ -24,8 +24,7 @@ def api_checkin(p: MgrRequest):
         extravars={
             "project": project,
             "user": user,
-            "content_branch": settings.CONTENT_BRANCH,
-            "frontend_branch": settings.FRONTEND_BRANCH,
+            "repo_branch": p.branch,
         },
     )
     print("r", vars(r))

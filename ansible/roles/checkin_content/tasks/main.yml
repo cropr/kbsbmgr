@@ -14,7 +14,7 @@
   become: true
   ansible.builtin.shell:
     chdir: "{{ content.srcdir }}/{{ repo.name }}"
-    cmd: "git checkout {{ repo.branch }} --"
+    cmd: "git checkout {{ repo_branch }} --"
 
 - name: git pull
   become: true
