@@ -4,12 +4,12 @@
 from reddevilmgr.main import app
 from reddevil.core import get_settings
 import ansible_runner
-from reddevilmgr.models.user import Person
+from reddevilmgr.models.mgrrequest import MgrRequest
 from reddevilmgr.api import domain_mapping
 
 
 @app.post("/python/checkout")
-def api_checkout(p: Person):
+def api_checkout(p: MgrRequest):
     settings = get_settings()
     domain = p.email.split("@")[-1]
     user = p.user.lower()

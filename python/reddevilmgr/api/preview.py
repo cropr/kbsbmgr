@@ -3,13 +3,13 @@
 
 from reddevilmgr.main import app
 from reddevil.core import get_settings
-from reddevilmgr.models.user import Person
+from reddevilmgr.models.user import MgrRequest
 from reddevilmgr.api import domain_mapping
 import ansible_runner
 
 
 @app.post("/python/preview")
-def api_preview(p: Person):
+def api_preview(p: MgrRequest):
     settings = get_settings()
     domain = p.email.split("@")[-1]
     user = p.user.lower()

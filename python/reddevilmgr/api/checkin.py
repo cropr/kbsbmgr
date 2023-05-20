@@ -4,7 +4,7 @@
 import logging
 from reddevilmgr.main import app
 from reddevil.core import get_settings
-from reddevilmgr.models.user import Person
+from reddevilmgr.models.mgrrequest import MgrRequest
 from reddevilmgr.api import domain_mapping
 import ansible_runner
 
@@ -12,7 +12,7 @@ logger = logging.getLogger("reddevilmgr")
 
 
 @app.post("/python/checkin")
-def api_checkin(p: Person):
+def api_checkin(p: MgrRequest):
     settings = get_settings()
     logger.info("Doing checkin")
     domain = p.email.split("@")[-1]

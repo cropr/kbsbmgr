@@ -3,7 +3,7 @@
 
 from reddevilmgr.main import app
 from reddevil.core import get_settings
-from reddevilmgr.models.user import Person
+from reddevilmgr.models.mgrrequest import MgrRequest
 from fastapi.responses import Response
 from typing import Dict
 import yaml
@@ -14,7 +14,7 @@ from reddevilmgr.api import domain_mapping
 @app.post(
     "/python/ports",
 )
-def api_ports(p: Person):
+def api_ports(p: MgrRequest):
     domain = p.email.split("@")[-1]
     user = p.user.lower()
     project = domain_mapping.get(domain)
