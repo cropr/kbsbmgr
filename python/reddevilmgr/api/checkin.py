@@ -14,7 +14,7 @@ logger = logging.getLogger("reddevilmgr")
 @app.post("/python/checkin")
 def api_checkin(p: MgrRequest):
     settings = get_settings()
-    logger.info("Doing checkin")
+    logger.info(f"Doing checkin on branch {p.branch}")
     domain = p.email.split("@")[-1]
     user = p.user.lower()
     project = domain_mapping.get(domain)

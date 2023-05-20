@@ -4,6 +4,10 @@
 
   tasks:
 
+    - name: show repo_branch
+      debug:
+        var: repo_branch
+
     - name: load services variables
       include_vars:
         file: "vars/{{ project }}.yml"
