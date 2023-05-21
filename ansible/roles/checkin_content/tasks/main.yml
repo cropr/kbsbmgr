@@ -10,7 +10,7 @@
     - collection_dir_st
     - collection_dir_repo
 
-- name: git checkout {{ contentrepo.url }} in {{ content.srcdir }}/{{ repo.name }}
+- name: git checkout {{ repo.url }} in {{ content.srcdir }}/{{ repo.name }}
   become: true
   ansible.builtin.shell:
     chdir: "{{ content.srcdir }}/{{ repo.name }}"
@@ -22,7 +22,7 @@
     chdir: "{{ content.srcdir }}/{{ repo.name }}"
     cmd: git pull
 
-- name: copy content collections from {{ content_dir }} to statamic content collections
+- name: copy content collections from {{ content.srcdir }} to statamic content collections
   become: true
   ansible.builtin.shell:
     chdir: "{{ content.srcdir }}/{{ repo.name }}"
